@@ -1,0 +1,801 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ReadQuest Макеты</title>
+  <style>
+    :root {
+      --page: #EEF0EC;
+      --surface: #FFFDF8;
+      --surface-soft: #F7F3EA;
+      --ink: #29241F;
+      --text: #51483F;
+      --muted: #83786D;
+      --line: rgba(41, 36, 31, 0.13);
+      --line-strong: rgba(41, 36, 31, 0.22);
+      --accent: #2F765D;
+      --accent-strong: #235742;
+      --gold: #D9A441;
+      --blue: #405D7D;
+      --radius: 12px;
+      --preview-scale: 0.28;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-height: 100%;
+      background: var(--page);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+    }
+
+    body {
+      margin: 0;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    .shell {
+      width: min(1360px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 20px 0 48px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      min-height: 56px;
+      margin-bottom: 14px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .mark {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.84);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, #FFFFFF, var(--surface-soft));
+      color: var(--accent-strong);
+      font-size: 17px;
+      font-weight: 820;
+      line-height: 1;
+      box-shadow: 0 8px 20px rgba(41, 36, 31, 0.08);
+    }
+
+    .brand-text {
+      display: grid;
+      gap: 2px;
+    }
+
+    .brand-text strong {
+      font-size: 18px;
+      line-height: 1.12;
+      letter-spacing: 0;
+    }
+
+    .brand-text span {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.2;
+      font-weight: 620;
+    }
+
+    .top-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .button,
+    .action-link {
+      min-height: 38px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 253, 248, 0.76);
+      padding: 0 13px;
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 760;
+      white-space: nowrap;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.76);
+    }
+
+    .button.primary,
+    .action-link.primary {
+      border-color: rgba(47, 118, 93, 0.28);
+      background: rgba(47, 118, 93, 0.12);
+      color: var(--accent-strong);
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .summary-item {
+      display: grid;
+      gap: 4px;
+      padding: 13px 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 253, 248, 0.72);
+    }
+
+    .summary-item strong {
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .summary-item span {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+
+    .workspace {
+      position: relative;
+    }
+
+    .tab-input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .tabbar {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 8px;
+      border: 1px solid var(--line);
+      border-radius: calc(var(--radius) + 8px);
+      background: rgba(238, 240, 236, 0.92);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 10px 28px rgba(41, 36, 31, 0.08);
+    }
+
+    .tabbar label {
+      min-height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      padding: 0 16px;
+      color: var(--text);
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 780;
+      white-space: nowrap;
+    }
+
+    #tab-owner:checked ~ .tabbar label[for="tab-owner"],
+    #tab-dev-one:checked ~ .tabbar label[for="tab-dev-one"],
+    #tab-dev-two:checked ~ .tabbar label[for="tab-dev-two"] {
+      border-color: rgba(47, 118, 93, 0.28);
+      background: var(--surface);
+      color: var(--accent-strong);
+      box-shadow: 0 7px 18px rgba(41, 36, 31, 0.09);
+    }
+
+    .panels {
+      margin-top: 14px;
+    }
+
+    .tab-panel {
+      display: none;
+    }
+
+    #tab-owner:checked ~ .panels #panel-owner,
+    #tab-dev-one:checked ~ .panels #panel-dev-one,
+    #tab-dev-two:checked ~ .panels #panel-dev-two {
+      display: grid;
+      gap: 16px;
+    }
+
+    .panel-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 2px 2px 0;
+    }
+
+    .panel-head h1 {
+      font-size: 28px;
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    .panel-head p {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.35;
+    }
+
+    .version-group {
+      display: grid;
+      gap: 10px;
+    }
+
+    .group-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      min-height: 34px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 8px;
+    }
+
+    .group-head h2,
+    .version-group summary {
+      color: var(--ink);
+      font-size: 15px;
+      line-height: 1.2;
+      font-weight: 820;
+      letter-spacing: 0;
+    }
+
+    .version-group summary {
+      cursor: pointer;
+      list-style: none;
+    }
+
+    .version-group summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .count {
+      min-width: 26px;
+      min-height: 24px;
+      display: inline-grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 253, 248, 0.68);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 780;
+    }
+
+    .version-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 12px;
+    }
+
+    .version-card {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      overflow: hidden;
+      min-height: 366px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: 0 10px 24px rgba(41, 36, 31, 0.08);
+    }
+
+    .preview {
+      position: relative;
+      overflow: hidden;
+      height: 178px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, #E8ECE7, #F5F0E7);
+    }
+
+    .preview iframe {
+      width: 1040px;
+      height: 720px;
+      border: 0;
+      transform: scale(var(--preview-scale));
+      transform-origin: top left;
+      pointer-events: none;
+      background: #FFFDF8;
+    }
+
+    .card-body {
+      display: grid;
+      align-content: start;
+      gap: 9px;
+      padding: 13px;
+    }
+
+    .meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 740;
+    }
+
+    .badge {
+      min-height: 24px;
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid rgba(47, 118, 93, 0.22);
+      border-radius: 999px;
+      background: rgba(47, 118, 93, 0.1);
+      padding: 0 9px;
+      color: var(--accent-strong);
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .badge.active {
+      border-color: rgba(217, 164, 65, 0.32);
+      background: rgba(217, 164, 65, 0.14);
+      color: #725217;
+    }
+
+    .badge.archive {
+      border-color: rgba(64, 93, 125, 0.22);
+      background: rgba(64, 93, 125, 0.1);
+      color: #314962;
+    }
+
+    .version-card h3 {
+      color: var(--ink);
+      font-size: 18px;
+      line-height: 1.16;
+      letter-spacing: 0;
+    }
+
+    .version-card p {
+      color: var(--text);
+      font-size: 13px;
+      line-height: 1.38;
+    }
+
+    .path {
+      color: var(--muted);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 10.5px;
+      line-height: 1.36;
+      word-break: break-word;
+    }
+
+    .card-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 0 13px 13px;
+    }
+
+    .action-link {
+      min-height: 34px;
+      padding: 0 11px;
+      font-size: 12px;
+    }
+
+    .empty {
+      min-height: 90px;
+      display: grid;
+      place-items: center;
+      border: 1px dashed var(--line-strong);
+      border-radius: var(--radius);
+      background: rgba(255, 253, 248, 0.46);
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+      text-align: center;
+      padding: 16px;
+    }
+
+    code {
+      border-radius: 6px;
+      background: rgba(41, 36, 31, 0.08);
+      padding: 2px 5px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.92em;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    @media (max-width: 960px) {
+      .summary {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .panel-head {
+        align-items: stretch;
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 720px) {
+      :root {
+        --preview-scale: 0.34;
+      }
+
+      .shell {
+        width: min(100% - 24px, 560px);
+        padding-top: 14px;
+      }
+
+      .topbar {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .top-actions {
+        justify-content: flex-start;
+      }
+
+      .summary {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .version-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .version-card {
+        min-height: 0;
+      }
+
+      .preview {
+        height: 220px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar" aria-label="Навигация">
+      <a class="brand" href="./">
+        <span class="mark">RQ</span>
+        <span class="brand-text">
+          <strong>Макеты ReadQuest</strong>
+          <span>Каталог версий</span>
+        </span>
+      </a>
+      <nav class="top-actions" aria-label="Быстрые ссылки">
+        <a class="button primary" href="./design/pencil/exports/2026-07-05_today-open-book-soft/">Главный макет</a>
+        <a class="button" href="https://github.com/TQ-GO/readquest-design-review">GitHub</a>
+      </nav>
+    </header>
+
+    <section class="summary" aria-label="Сводка">
+      <div class="summary-item">
+        <strong>5</strong>
+        <span>версии</span>
+      </div>
+      <div class="summary-item">
+        <strong>1</strong>
+        <span>новая</span>
+      </div>
+      <div class="summary-item">
+        <strong>2</strong>
+        <span>актуальные</span>
+      </div>
+      <div class="summary-item">
+        <strong>2</strong>
+        <span>архив</span>
+      </div>
+    </section>
+
+    <section class="workspace" aria-label="Вкладки участников">
+      <input class="tab-input" type="radio" name="workspace" id="tab-owner" checked>
+      <input class="tab-input" type="radio" name="workspace" id="tab-dev-one">
+      <input class="tab-input" type="radio" name="workspace" id="tab-dev-two">
+
+      <div class="tabbar" role="tablist" aria-label="Участники">
+        <label for="tab-owner" role="tab">Владелец</label>
+        <label for="tab-dev-one" role="tab">Разработчик 1</label>
+        <label for="tab-dev-two" role="tab">Разработчик 2</label>
+      </div>
+
+      <div class="panels">
+        <section class="tab-panel" id="panel-owner" aria-label="Вкладка владельца">
+          <div class="panel-head">
+            <div>
+              <h1>Владелец</h1>
+              <p>Основные версии для выбора и утверждения.</p>
+            </div>
+          </div>
+
+          <section class="version-group" aria-label="Новые версии">
+            <div class="group-head">
+              <h2>Новые</h2>
+              <span class="count">1</span>
+            </div>
+            <div class="version-grid">
+              <article class="version-card">
+                <div class="preview" aria-hidden="true">
+                  <iframe loading="lazy" title="Today Open Book Soft preview" src="./design/pencil/exports/2026-07-05_today-open-book-soft/"></iframe>
+                </div>
+                <div class="card-body">
+                  <div class="meta">
+                    <span class="badge">Новая</span>
+                    <span>2026-07-05</span>
+                  </div>
+                  <h3>Today Open Book Soft</h3>
+                  <p>Мягкая книжная CTA-кнопка в стиле референса.</p>
+                  <p class="path">docs/design/pencil/exports/2026-07-05_today-open-book-soft/</p>
+                </div>
+                <div class="card-actions">
+                  <a class="action-link primary" href="./design/pencil/exports/2026-07-05_today-open-book-soft/">Смотреть</a>
+                  <a class="action-link" href="https://github.com/TQ-GO/readquest-design-review/tree/main/design/pencil/exports/2026-07-05_today-open-book-soft">Файлы</a>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <section class="version-group" aria-label="Актуальные версии">
+            <div class="group-head">
+              <h2>Актуальные</h2>
+              <span class="count">2</span>
+            </div>
+            <div class="version-grid">
+              <article class="version-card">
+                <div class="preview" aria-hidden="true">
+                  <iframe loading="lazy" title="Today Home portal preview" src="./design/pencil/exports/2026-07-02_today-home-portal-mockups/"></iframe>
+                </div>
+                <div class="card-body">
+                  <div class="meta">
+                    <span class="badge active">Актуальная</span>
+                    <span>2026-07-02</span>
+                  </div>
+                  <h3>Today / Home Portal</h3>
+                  <p>3 варианта Home с порталом чтения.</p>
+                  <p class="path">docs/design/pencil/exports/2026-07-02_today-home-portal-mockups/</p>
+                </div>
+                <div class="card-actions">
+                  <a class="action-link primary" href="./design/pencil/exports/2026-07-02_today-home-portal-mockups/">Смотреть</a>
+                  <a class="action-link" href="https://github.com/TQ-GO/readquest-design-review/tree/main/design/pencil/exports/2026-07-02_today-home-portal-mockups">Файлы</a>
+                </div>
+              </article>
+
+              <article class="version-card">
+                <div class="preview" aria-hidden="true">
+                  <iframe loading="lazy" title="Tweakable design playground preview" src="./design/pencil/exports/2026-05-19_readquest_tweakable_design_playground.html"></iframe>
+                </div>
+                <div class="card-body">
+                  <div class="meta">
+                    <span class="badge active">Актуальная</span>
+                    <span>2026-05-19</span>
+                  </div>
+                  <h3>Tweakable Playground</h3>
+                  <p>Настройка визуального направления.</p>
+                  <p class="path">docs/design/pencil/exports/2026-05-19_readquest_tweakable_design_playground.html</p>
+                </div>
+                <div class="card-actions">
+                  <a class="action-link primary" href="./design/pencil/exports/2026-05-19_readquest_tweakable_design_playground.html">Смотреть</a>
+                  <a class="action-link" href="https://github.com/TQ-GO/readquest-design-review/blob/main/design/pencil/exports/2026-05-19_readquest_tweakable_design_playground.html">Файл</a>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <details class="version-group">
+            <summary class="group-head">
+              <span>Архив</span>
+              <span class="count">2</span>
+            </summary>
+            <div class="version-grid">
+              <article class="version-card">
+                <div class="preview" aria-hidden="true">
+                  <iframe loading="lazy" title="ReadQuest design hub preview" src="./design/pencil/exports/2026-05-19_readquest_design_hub.html"></iframe>
+                </div>
+                <div class="card-body">
+                  <div class="meta">
+                    <span class="badge archive">Архив</span>
+                    <span>2026-05-19</span>
+                  </div>
+                  <h3>Design Hub</h3>
+                  <p>Ранний обзор артефактов.</p>
+                  <p class="path">docs/design/pencil/exports/2026-05-19_readquest_design_hub.html</p>
+                </div>
+                <div class="card-actions">
+                  <a class="action-link primary" href="./design/pencil/exports/2026-05-19_readquest_design_hub.html">Смотреть</a>
+                  <a class="action-link" href="https://github.com/TQ-GO/readquest-design-review/blob/main/design/pencil/exports/2026-05-19_readquest_design_hub.html">Файл</a>
+                </div>
+              </article>
+
+              <article class="version-card">
+                <div class="preview" aria-hidden="true">
+                  <iframe loading="lazy" title="Phase one clickable prototype preview" src="./design/pencil/exports/2026-05-17_readquest_phase1_clickable_prototype.html"></iframe>
+                </div>
+                <div class="card-body">
+                  <div class="meta">
+                    <span class="badge archive">Архив</span>
+                    <span>2026-05-17</span>
+                  </div>
+                  <h3>Phase 1 Prototype</h3>
+                  <p>Первый кликабельный прототип.</p>
+                  <p class="path">docs/design/pencil/exports/2026-05-17_readquest_phase1_clickable_prototype.html</p>
+                </div>
+                <div class="card-actions">
+                  <a class="action-link primary" href="./design/pencil/exports/2026-05-17_readquest_phase1_clickable_prototype.html">Смотреть</a>
+                  <a class="action-link" href="https://github.com/TQ-GO/readquest-design-review/blob/main/design/pencil/exports/2026-05-17_readquest_phase1_clickable_prototype.html">Файл</a>
+                </div>
+              </article>
+            </div>
+          </details>
+        </section>
+
+        <section class="tab-panel" id="panel-dev-one" aria-label="Вкладка первого разработчика">
+          <div class="panel-head">
+            <div>
+              <h1>Разработчик 1</h1>
+              <p>Версии и рабочие варианты первого разработчика.</p>
+            </div>
+          </div>
+
+          <section class="version-group" aria-label="Новые версии разработчика 1">
+            <div class="group-head">
+              <h2>Новые</h2>
+              <span class="count">0</span>
+            </div>
+            <div class="empty">Новых версий пока нет</div>
+          </section>
+
+          <section class="version-group" aria-label="Актуальные версии разработчика 1">
+            <div class="group-head">
+              <h2>Актуальные</h2>
+              <span class="count">2</span>
+            </div>
+            <div class="version-grid">
+              <article class="version-card">
+                <div class="preview" aria-hidden="true">
+                  <iframe loading="lazy" title="Developer one Today base preview" src="./design/pencil/exports/2026-07-02_today-home-portal-mockups/"></iframe>
+                </div>
+                <div class="card-body">
+                  <div class="meta">
+                    <span class="badge active">Base</span>
+                    <span>2026-07-02</span>
+                  </div>
+                  <h3>Today / Home Base</h3>
+                  <p>База для новых правок Home.</p>
+                  <p class="path">docs/design/pencil/exports/2026-07-02_today-home-portal-mockups/</p>
+                </div>
+                <div class="card-actions">
+                  <a class="action-link primary" href="./design/pencil/exports/2026-07-02_today-home-portal-mockups/">Смотреть</a>
+                  <a class="action-link" href="https://github.com/TQ-GO/readquest-design-review/branches">Ветки</a>
+                </div>
+              </article>
+
+              <article class="version-card">
+                <div class="preview" aria-hidden="true">
+                  <iframe loading="lazy" title="Material playground preview" src="./design/pencil/exports/2026-05-19_readquest_tweakable_design_playground.html"></iframe>
+                </div>
+                <div class="card-body">
+                  <div class="meta">
+                    <span class="badge active">Reference</span>
+                    <span>2026-05-19</span>
+                  </div>
+                  <h3>Material Reference</h3>
+                  <p>База для проверки материала и настроек.</p>
+                  <p class="path">docs/design/pencil/exports/2026-05-19_readquest_tweakable_design_playground.html</p>
+                </div>
+                <div class="card-actions">
+                  <a class="action-link primary" href="./design/pencil/exports/2026-05-19_readquest_tweakable_design_playground.html">Смотреть</a>
+                  <a class="action-link" href="https://github.com/TQ-GO/readquest-design-review/blob/main/design/pencil/exports/2026-05-19_readquest_tweakable_design_playground.html">Файл</a>
+                </div>
+              </article>
+            </div>
+          </section>
+        </section>
+
+        <section class="tab-panel" id="panel-dev-two" aria-label="Вкладка второго разработчика">
+          <div class="panel-head">
+            <div>
+              <h1>Разработчик 2</h1>
+              <p>Версии и рабочие варианты второго разработчика.</p>
+            </div>
+          </div>
+
+          <section class="version-group" aria-label="Новые версии разработчика 2">
+            <div class="group-head">
+              <h2>Новые</h2>
+              <span class="count">0</span>
+            </div>
+            <div class="empty">Новых версий пока нет</div>
+          </section>
+
+          <section class="version-group" aria-label="Актуальные версии разработчика 2">
+            <div class="group-head">
+              <h2>Актуальные</h2>
+              <span class="count">1</span>
+            </div>
+            <div class="version-grid">
+              <article class="version-card">
+                <div class="preview" aria-hidden="true">
+                  <iframe loading="lazy" title="Phase one prototype preview" src="./design/pencil/exports/2026-05-17_readquest_phase1_clickable_prototype.html"></iframe>
+                </div>
+                <div class="card-body">
+                  <div class="meta">
+                    <span class="badge active">Reference</span>
+                    <span>2026-05-17</span>
+                  </div>
+                  <h3>Phase 1 Prototype</h3>
+                  <p>Сверка базового сценария.</p>
+                  <p class="path">docs/design/pencil/exports/2026-05-17_readquest_phase1_clickable_prototype.html</p>
+                </div>
+                <div class="card-actions">
+                  <a class="action-link primary" href="./design/pencil/exports/2026-05-17_readquest_phase1_clickable_prototype.html">Смотреть</a>
+                  <a class="action-link" href="https://github.com/TQ-GO/readquest-design-review/blob/main/design/pencil/exports/2026-05-17_readquest_phase1_clickable_prototype.html">Файл</a>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <details class="version-group">
+            <summary class="group-head">
+              <span>Архив</span>
+              <span class="count">1</span>
+            </summary>
+            <div class="version-grid">
+              <article class="version-card">
+                <div class="preview" aria-hidden="true">
+                  <iframe loading="lazy" title="Design hub preview for developer two" src="./design/pencil/exports/2026-05-19_readquest_design_hub.html"></iframe>
+                </div>
+                <div class="card-body">
+                  <div class="meta">
+                    <span class="badge archive">Архив</span>
+                    <span>2026-05-19</span>
+                  </div>
+                  <h3>Design Hub</h3>
+                  <p>Ранний обзор артефактов.</p>
+                  <p class="path">docs/design/pencil/exports/2026-05-19_readquest_design_hub.html</p>
+                </div>
+                <div class="card-actions">
+                  <a class="action-link primary" href="./design/pencil/exports/2026-05-19_readquest_design_hub.html">Смотреть</a>
+                  <a class="action-link" href="https://github.com/TQ-GO/readquest-design-review/blob/main/design/pencil/exports/2026-05-19_readquest_design_hub.html">Файл</a>
+                </div>
+              </article>
+            </div>
+          </details>
+        </section>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

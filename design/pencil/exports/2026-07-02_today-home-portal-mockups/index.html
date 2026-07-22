@@ -1,0 +1,1474 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ReadQuest · Home portal mockups</title>
+  <style>
+    :root {
+      --paper: #FAF6EF;
+      --paper-warm: #F8F1E7;
+      --card: #FFFDF8;
+      --card-soft: #F4EBDD;
+      --text: #2C241D;
+      --text-soft: #6F6257;
+      --text-muted: #9A8D82;
+      --green: #2F855F;
+      --green-dark: #236348;
+      --sage: #6FA866;
+      --lavender: #9C7AC9;
+      --gold: #D9A441;
+      --amber: #F2B84B;
+      --ruby: #B21F4B;
+      --line: rgba(44, 36, 29, 0.1);
+      --shadow: rgba(44, 36, 29, 0.14);
+      --shadow-soft: rgba(44, 36, 29, 0.08);
+      --font-ui: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+      --font-reader: Georgia, "Times New Roman", serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      background: #EEE7DC;
+      color: var(--text);
+      font-family: var(--font-ui);
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+    }
+
+    button {
+      min-height: 44px;
+      border: 0;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    button:focus-visible {
+      outline: 3px solid rgba(156, 122, 201, 0.38);
+      outline-offset: 3px;
+    }
+
+    .board {
+      min-height: 100vh;
+      padding: 32px;
+    }
+
+    .board-header {
+      max-width: 1220px;
+      margin: 0 auto 24px;
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .board-title {
+      margin: 0;
+      font-size: 30px;
+      line-height: 1.1;
+      font-weight: 760;
+    }
+
+    .board-subtitle {
+      margin: 8px 0 0;
+      max-width: 700px;
+      color: var(--text-soft);
+      font-size: 15px;
+      line-height: 1.45;
+      font-weight: 650;
+    }
+
+    .board-meta {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .meta-pill {
+      min-height: 34px;
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      border: 1px solid rgba(44, 36, 29, 0.12);
+      background: rgba(255, 253, 248, 0.74);
+      padding: 0 12px;
+      color: var(--text-soft);
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .mockups {
+      max-width: 1220px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(320px, 390px));
+      align-items: start;
+      justify-content: center;
+      gap: 24px;
+    }
+
+    .variant {
+      display: grid;
+      gap: 12px;
+    }
+
+    .variant-label {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      min-height: 42px;
+      color: var(--text-soft);
+      font-size: 13px;
+      font-weight: 760;
+    }
+
+    .variant-label strong {
+      color: var(--text);
+      font-size: 18px;
+      line-height: 1.1;
+      font-weight: 860;
+    }
+
+    .phone {
+      width: min(390px, 100%);
+      aspect-ratio: 390 / 844;
+      position: relative;
+      overflow: hidden;
+      border-radius: 34px;
+      background: var(--paper);
+      border: 1px solid rgba(255, 255, 255, 0.82);
+      box-shadow: 0 24px 70px rgba(44, 36, 29, 0.2);
+    }
+
+    .screen {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-rows: auto auto auto auto auto;
+      padding: 14px 20px 18px;
+      gap: 10px;
+      background:
+        radial-gradient(circle at 72% 15%, rgba(217, 164, 65, 0.12), transparent 28%),
+        linear-gradient(180deg, var(--paper) 0%, #F2EADD 100%);
+    }
+
+    .status-bar {
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 3px;
+      font-size: 14px;
+      font-weight: 850;
+      color: #1F2924;
+    }
+
+    .system-icons {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .signal {
+      width: 18px;
+      height: 12px;
+      display: inline-flex;
+      align-items: end;
+      gap: 3px;
+    }
+
+    .signal i {
+      width: 4px;
+      border-radius: 999px;
+      background: #1F2924;
+    }
+
+    .signal i:nth-child(1) {
+      height: 7px;
+    }
+
+    .signal i:nth-child(2) {
+      height: 10px;
+    }
+
+    .battery {
+      width: 27px;
+      height: 13px;
+      border: 1.8px solid #1F2924;
+      border-radius: 4px;
+      position: relative;
+    }
+
+    .battery:after {
+      content: "";
+      position: absolute;
+      right: -4px;
+      top: 3px;
+      width: 2px;
+      height: 5px;
+      border-radius: 0 2px 2px 0;
+      background: #1F2924;
+    }
+
+    .top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      min-height: 44px;
+    }
+
+    .identity-mark {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      background: rgba(255, 253, 248, 0.7);
+      border: 1px solid rgba(44, 36, 29, 0.08);
+      color: var(--green);
+      box-shadow: 0 8px 18px var(--shadow-soft);
+    }
+
+    .metric-cluster {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .metric-chip {
+      min-width: 66px;
+      min-height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(217, 164, 65, 0.3);
+      background: rgba(255, 249, 236, 0.76);
+      color: #8E641B;
+      font-size: 13px;
+      font-weight: 780;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    }
+
+    .metric-chip img {
+      width: 22px;
+      height: 22px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .finik-zone {
+      position: relative;
+      min-height: 200px;
+      display: grid;
+      grid-template-columns: 1fr 150px;
+      align-items: end;
+      gap: 4px;
+    }
+
+    .finik-zone.compact {
+      min-height: 138px;
+      grid-template-columns: 1fr 128px;
+    }
+
+    .finik-copy {
+      align-self: center;
+      display: grid;
+      gap: 5px;
+      max-width: 190px;
+      z-index: 2;
+    }
+
+    .kicker {
+      color: #B67A13;
+      font-size: 12px;
+      line-height: 1.15;
+      font-weight: 700;
+    }
+
+    .finik-copy h2 {
+      margin: 0;
+      color: #21332A;
+      font-size: 21px;
+      line-height: 1.15;
+      font-weight: 720;
+      letter-spacing: 0;
+    }
+
+    .finik-copy p {
+      margin: 0;
+      color: #66766D;
+      font-size: 13px;
+      line-height: 1.34;
+      font-weight: 620;
+    }
+
+    .finik-img {
+      width: 158px;
+      height: auto;
+      align-self: end;
+      justify-self: end;
+      object-fit: contain;
+      filter: drop-shadow(0 14px 14px rgba(44, 36, 29, 0.12));
+      transform: translate(8px, 6px);
+      z-index: 1;
+    }
+
+    .finik-zone.compact .finik-img {
+      width: 132px;
+      transform: translate(8px, 4px);
+    }
+
+    .portal-card {
+      position: relative;
+      align-self: start;
+      display: grid;
+      gap: 12px;
+      padding: 14px;
+      overflow: hidden;
+      border-radius: 28px;
+      background: rgba(255, 253, 248, 0.94);
+      border: 1px solid rgba(44, 36, 29, 0.1);
+      box-shadow: 0 20px 44px rgba(44, 36, 29, 0.14);
+    }
+
+    .portal-card:before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.72), transparent 34%);
+    }
+
+    .portal-card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .scene {
+      min-height: 150px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      background: #244835;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24);
+    }
+
+    .scene-art {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.02);
+    }
+
+    .scene:after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0;
+      height: 52%;
+      background: linear-gradient(180deg, transparent, rgba(19, 35, 28, 0.82));
+      pointer-events: none;
+    }
+
+    .scene-label {
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      bottom: 14px;
+      z-index: 2;
+      display: grid;
+      gap: 4px;
+      color: #FFFDF8;
+    }
+
+    .scene-label strong {
+      font-size: 18px;
+      line-height: 1.14;
+      font-weight: 760;
+    }
+
+    .scene-label span {
+      color: rgba(255, 253, 248, 0.76);
+      font-size: 12px;
+      line-height: 1.28;
+      font-weight: 620;
+    }
+
+    .memory-cue {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      z-index: 2;
+      min-height: 30px;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(236, 201, 128, 0.34);
+      background: rgba(24, 38, 36, 0.42);
+      color: rgba(255, 248, 227, 0.9);
+      padding: 0 10px;
+      font-size: 11px;
+      line-height: 1;
+      font-weight: 760;
+      backdrop-filter: blur(10px);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    }
+
+    .memory-cue:before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #F2C76E;
+      box-shadow: 0 0 12px rgba(242, 199, 110, 0.74);
+    }
+
+    .lamp-scene {
+      background:
+        radial-gradient(circle at 55% 26%, rgba(255, 219, 132, 0.86) 0 8%, rgba(255, 219, 132, 0.22) 9% 30%, transparent 46%),
+        linear-gradient(135deg, #184434 0%, #276244 46%, #E8B24D 130%);
+    }
+
+    .city-scene {
+      background:
+        radial-gradient(circle at 78% 22%, rgba(255, 232, 180, 0.82) 0 8%, rgba(255, 232, 180, 0.22) 9% 24%, transparent 36%),
+        linear-gradient(150deg, #273E49 0%, #334F59 45%, #9F6C53 120%);
+    }
+
+    .reward-scene {
+      background:
+        radial-gradient(circle at 74% 18%, rgba(178, 31, 75, 0.42), transparent 30%),
+        radial-gradient(circle at 18% 20%, rgba(242, 184, 75, 0.3), transparent 28%),
+        linear-gradient(150deg, #285643 0%, #1F4737 58%, #E6B35F 132%);
+    }
+
+    .lamp-beam,
+    .city-moon,
+    .reward-glow {
+      position: absolute;
+      pointer-events: none;
+    }
+
+    .lamp-beam {
+      width: 155px;
+      height: 190px;
+      left: 90px;
+      top: -18px;
+      border-radius: 44% 44% 12% 12%;
+      background: linear-gradient(180deg, rgba(255, 232, 172, 0.58), rgba(255, 232, 172, 0));
+      transform: perspective(140px) rotateX(18deg);
+      filter: blur(0.2px);
+    }
+
+    .desk-line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 40px;
+      height: 28px;
+      background: rgba(60, 35, 22, 0.18);
+      transform: skewY(-3deg);
+    }
+
+    .open-book {
+      position: absolute;
+      left: 50%;
+      bottom: 36px;
+      width: 126px;
+      height: 58px;
+      transform: translateX(-50%) rotate(-2deg);
+      z-index: 1;
+    }
+
+    .page {
+      position: absolute;
+      top: 0;
+      width: 64px;
+      height: 58px;
+      background: #FFF8E9;
+      border-radius: 9px 7px 18px 12px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.16);
+    }
+
+    .page:before,
+    .page:after {
+      content: "";
+      position: absolute;
+      left: 12px;
+      right: 10px;
+      height: 2px;
+      border-radius: 999px;
+      background: rgba(44, 36, 29, 0.18);
+    }
+
+    .page:before {
+      top: 18px;
+    }
+
+    .page:after {
+      top: 30px;
+      width: 34px;
+    }
+
+    .page.left {
+      left: 2px;
+      transform: skewY(7deg);
+    }
+
+    .page.right {
+      right: 2px;
+      transform: skewY(-7deg);
+    }
+
+    .book-spine {
+      position: absolute;
+      left: 58px;
+      top: 5px;
+      width: 9px;
+      height: 54px;
+      border-radius: 999px;
+      background: #D5AA5C;
+      z-index: 2;
+    }
+
+    .city-moon {
+      width: 58px;
+      height: 58px;
+      top: 24px;
+      right: 42px;
+      border-radius: 50%;
+      background: #FFF4CC;
+      box-shadow: 0 0 30px rgba(255, 242, 196, 0.52);
+    }
+
+    .roof {
+      position: absolute;
+      bottom: 44px;
+      width: 150px;
+      height: 58px;
+      background: rgba(28, 43, 48, 0.82);
+      transform: rotate(-6deg);
+      border-radius: 14px 14px 0 0;
+    }
+
+    .roof.one {
+      left: -22px;
+    }
+
+    .roof.two {
+      right: -16px;
+      bottom: 32px;
+      transform: rotate(7deg);
+      background: rgba(40, 58, 63, 0.9);
+    }
+
+    .window-dot {
+      position: absolute;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(255, 215, 128, 0.8);
+      box-shadow: 24px 10px 0 rgba(255, 215, 128, 0.55), 48px 2px 0 rgba(255, 215, 128, 0.4);
+    }
+
+    .roof.one .window-dot {
+      left: 24px;
+      top: 22px;
+    }
+
+    .roof.two .window-dot {
+      right: 70px;
+      top: 25px;
+    }
+
+    .reward-glow {
+      width: 154px;
+      height: 154px;
+      top: 4px;
+      right: 8px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(242, 184, 75, 0.26), transparent 62%);
+    }
+
+    .reward-ruby {
+      position: absolute;
+      top: 36px;
+      right: 34px;
+      width: 96px;
+      height: 96px;
+      object-fit: contain;
+      filter: drop-shadow(0 16px 20px rgba(90, 11, 35, 0.28));
+      transform: rotate(4deg);
+      z-index: 1;
+    }
+
+    .spark-line {
+      position: absolute;
+      left: 28px;
+      top: 40px;
+      display: grid;
+      gap: 9px;
+    }
+
+    .spark-line span {
+      width: 80px;
+      height: 5px;
+      border-radius: 999px;
+      background: rgba(255, 253, 248, 0.34);
+    }
+
+    .book-meta {
+      display: grid;
+      grid-template-columns: 62px 1fr;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .cover {
+      width: 62px;
+      height: 78px;
+      display: grid;
+      align-content: space-between;
+      border-radius: 16px;
+      background:
+        radial-gradient(circle at 80% 10%, rgba(255, 255, 255, 0.28), transparent 38%),
+        linear-gradient(145deg, #266747, #73AD63);
+      padding: 10px;
+      color: #FFFDF8;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24);
+    }
+
+    .cover strong {
+      font-size: 22px;
+      line-height: 1;
+      font-weight: 900;
+    }
+
+    .cover span {
+      font-size: 10px;
+      font-weight: 820;
+    }
+
+    .book-lines {
+      min-width: 0;
+      display: grid;
+      gap: 6px;
+    }
+
+    .book-lines h3 {
+      margin: 0;
+      color: #21332A;
+      font-size: 18px;
+      line-height: 1.2;
+      font-weight: 720;
+    }
+
+    .book-lines p {
+      margin: 0;
+      color: #66766D;
+      font-size: 12.5px;
+      line-height: 1.3;
+      font-weight: 560;
+    }
+
+    .progress-row {
+      display: grid;
+      gap: 7px;
+    }
+
+    .progress-labels {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      color: #6C7B70;
+      font-size: 12px;
+      line-height: 1.1;
+      font-weight: 720;
+    }
+
+    .progress-labels strong {
+      color: var(--green);
+    }
+
+    .progress {
+      height: 10px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(111, 168, 102, 0.22);
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 42%;
+      border-radius: inherit;
+      background: var(--green);
+    }
+
+    .win-line {
+      display: grid;
+      grid-template-columns: 38px 1fr;
+      align-items: center;
+      gap: 10px;
+      min-height: 54px;
+      border-top: 1px solid rgba(44, 36, 29, 0.08);
+      padding-top: 12px;
+      color: #2F4A3B;
+    }
+
+    .win-icon {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: rgba(242, 184, 75, 0.16);
+    }
+
+    .win-icon img {
+      width: 30px;
+      height: 30px;
+      object-fit: contain;
+    }
+
+    .win-line span {
+      color: #B17618;
+      font-size: 11px;
+      line-height: 1.2;
+      font-weight: 760;
+    }
+
+    .win-line strong {
+      display: block;
+      margin-top: 2px;
+      font-size: 13.5px;
+      line-height: 1.15;
+      font-weight: 700;
+    }
+
+    .portal-button {
+      min-height: 56px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      border-radius: 20px;
+      background:
+        radial-gradient(circle at 22% 0%, rgba(255, 239, 196, 0.2), transparent 34%),
+        linear-gradient(180deg, #348C69 0%, #287657 52%, #1F6048 100%);
+      color: #FFFDF8;
+      font-size: 16px;
+      line-height: 1;
+      font-weight: 760;
+      border: 1px solid rgba(232, 197, 124, 0.58);
+      border-bottom: 4px solid rgba(25, 83, 57, 0.72);
+      text-shadow: 0 1px 1px rgba(20, 52, 38, 0.28);
+      box-shadow:
+        0 14px 24px rgba(47, 133, 95, 0.28),
+        0 3px 0 rgba(25, 83, 57, 0.26),
+        inset 0 1px 0 rgba(255, 255, 255, 0.34),
+        inset 0 -14px 22px rgba(23, 75, 52, 0.18);
+    }
+
+    .portal-button:before {
+      content: "";
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      top: 2px;
+      height: 36%;
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
+      pointer-events: none;
+    }
+
+    .portal-button:after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: 0.18;
+      background-image:
+        radial-gradient(circle at 22% 30%, rgba(255, 255, 255, 0.22) 0 1px, transparent 1.5px),
+        radial-gradient(circle at 74% 65%, rgba(18, 53, 39, 0.24) 0 1px, transparent 1.5px),
+        linear-gradient(90deg, transparent, rgba(255, 230, 166, 0.18), transparent);
+      background-size: 18px 18px, 22px 22px, 100% 100%;
+      mix-blend-mode: soft-light;
+      pointer-events: none;
+    }
+
+    .portal-button > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .portal-button svg,
+    .nav-icon svg,
+    .identity-mark svg {
+      width: 21px;
+      height: 21px;
+      stroke: currentColor;
+      stroke-width: 2.25;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+    }
+
+    .portal-button:active {
+      transform: translateY(2px);
+      border-bottom-width: 2px;
+      box-shadow:
+        0 8px 16px rgba(47, 133, 95, 0.24),
+        inset 0 1px 0 rgba(255, 255, 255, 0.22),
+        inset 0 -10px 18px rgba(23, 75, 52, 0.2);
+    }
+
+    .bottom-nav {
+      align-self: end;
+      min-height: 64px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      padding: 6px;
+      border-radius: 28px;
+      border: 1px solid rgba(44, 36, 29, 0.09);
+      background: rgba(255, 253, 248, 0.84);
+      box-shadow: 0 16px 34px rgba(44, 36, 29, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    }
+
+    .nav-item {
+      min-width: 0;
+      min-height: 52px;
+      display: grid;
+      place-items: center;
+      border-radius: 22px;
+      color: #95A197;
+      background: transparent;
+    }
+
+    .nav-item.active {
+      color: var(--green);
+      background: rgba(218, 239, 228, 0.92);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.66);
+    }
+
+    .variant-b .screen {
+      background:
+        radial-gradient(circle at 78% 22%, rgba(156, 122, 201, 0.1), transparent 30%),
+        linear-gradient(180deg, #F6F0E8 0%, #EFE4D4 100%);
+    }
+
+    .variant-b .portal-card {
+      margin-top: -2px;
+      background:
+        linear-gradient(180deg, rgba(255, 253, 248, 0.97), rgba(255, 250, 241, 0.92)),
+        radial-gradient(circle at 50% 0%, rgba(242, 184, 75, 0.16), transparent 48%);
+      border-color: rgba(217, 164, 65, 0.22);
+      box-shadow:
+        0 24px 48px rgba(44, 36, 29, 0.17),
+        0 2px 0 rgba(255, 255, 255, 0.72) inset;
+    }
+
+    .variant-b .scene {
+      min-height: 178px;
+      border-radius: 24px;
+      border-color: rgba(255, 244, 212, 0.42);
+      background: #14322E;
+      box-shadow:
+        0 16px 30px rgba(24, 55, 48, 0.24),
+        inset 0 1px 0 rgba(255, 255, 255, 0.28),
+        inset 0 -36px 48px rgba(13, 25, 27, 0.36);
+    }
+
+    .variant-b .scene:before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background:
+        linear-gradient(110deg, rgba(10, 26, 28, 0.2) 0%, transparent 38%, rgba(255, 217, 144, 0.13) 70%, rgba(255, 238, 185, 0.22) 100%),
+        radial-gradient(circle at 58% 78%, rgba(255, 205, 102, 0.25), transparent 34%),
+        linear-gradient(180deg, rgba(8, 26, 30, 0.04) 0%, rgba(8, 24, 27, 0.02) 36%, rgba(8, 20, 22, 0.72) 100%);
+      pointer-events: none;
+    }
+
+    .variant-b .scene-art {
+      object-position: center center;
+      transform: scale(1.025);
+      filter: saturate(0.96) contrast(1.03);
+    }
+
+    .variant-b .scene-label strong {
+      max-width: 220px;
+      font-size: 16px;
+      line-height: 1.16;
+      font-weight: 680;
+    }
+
+    .variant-b .scene-label span {
+      display: none;
+    }
+
+    .variant-b .memory-cue {
+      min-height: 28px;
+      color: rgba(255, 248, 227, 0.86);
+      background: rgba(14, 28, 30, 0.34);
+    }
+
+    .variant-b .city-moon,
+    .variant-b .roof {
+      display: none;
+    }
+
+    .variant-b .portal-button {
+      min-height: 60px;
+      background:
+        radial-gradient(circle at 50% -18%, rgba(255, 231, 171, 0.36), transparent 44%),
+        radial-gradient(circle at 18% 18%, rgba(255, 255, 255, 0.16), transparent 28%),
+        linear-gradient(180deg, #357B64 0%, #2B6A55 54%, #214F41 100%);
+      border-color: rgba(236, 201, 128, 0.72);
+      border-bottom-color: rgba(21, 75, 52, 0.86);
+      box-shadow:
+        0 16px 28px rgba(39, 89, 69, 0.31),
+        0 0 0 1px rgba(255, 244, 208, 0.2) inset,
+        0 4px 0 rgba(21, 75, 52, 0.32),
+        inset 0 1px 0 rgba(255, 255, 255, 0.32),
+        inset 0 -18px 28px rgba(12, 43, 34, 0.26);
+    }
+
+    .variant-c .screen {
+      background:
+        radial-gradient(circle at 78% 12%, rgba(178, 31, 75, 0.1), transparent 28%),
+        radial-gradient(circle at 14% 28%, rgba(242, 184, 75, 0.12), transparent 30%),
+        linear-gradient(180deg, #F9F4EC 0%, #F0E5D7 100%);
+    }
+
+    .variant-c .portal-card {
+      gap: 14px;
+      padding-top: 14px;
+    }
+
+    .variant-c .scene {
+      min-height: 145px;
+    }
+
+    .variant-c .book-meta {
+      grid-template-columns: 56px 1fr;
+    }
+
+    .variant-c .cover {
+      width: 56px;
+      height: 72px;
+    }
+
+    .quest-strip {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 12px;
+      border-top: 1px solid rgba(44, 36, 29, 0.08);
+      padding-top: 12px;
+    }
+
+    .quest-text {
+      display: grid;
+      gap: 5px;
+    }
+
+    .quest-text span {
+      color: #B17618;
+      font-size: 11px;
+      line-height: 1.2;
+      font-weight: 760;
+    }
+
+    .quest-text strong {
+      color: #2F4A3B;
+      font-size: 14px;
+      line-height: 1.15;
+      font-weight: 760;
+    }
+
+    .quest-icons {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .quest-icons img {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+      filter: drop-shadow(0 8px 8px rgba(44, 36, 29, 0.12));
+    }
+
+    .nav-icon {
+      display: grid;
+      place-items: center;
+    }
+
+    .nav-icon svg {
+      width: 23px;
+      height: 23px;
+    }
+
+    @media (max-width: 1160px) {
+      .mockups {
+        grid-template-columns: repeat(2, minmax(320px, 390px));
+      }
+    }
+
+    @media (max-width: 760px) {
+      .board {
+        padding: 18px 14px 28px;
+      }
+
+      .board-header {
+        display: grid;
+        gap: 14px;
+      }
+
+      .board-meta {
+        justify-content: flex-start;
+      }
+
+      .mockups {
+        grid-template-columns: minmax(320px, 390px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="board">
+    <header class="board-header">
+      <div>
+        <h1 class="board-title">Home / вход обратно в книгу</h1>
+        <p class="board-subtitle">Три варианта экрана без видимого заголовка «Сегодня»: активная иконка домика даёт контекст, а главный CTA работает как портал в текущую главу.</p>
+      </div>
+      <div class="board-meta" aria-label="Дизайн-рамки">
+        <span class="meta-pill">ReadQuest</span>
+        <span class="meta-pill">Hizo calm</span>
+        <span class="meta-pill">Duolingo loop</span>
+      </div>
+    </header>
+
+    <section class="mockups" aria-label="Варианты мобильного экрана Home">
+      <article class="variant variant-a">
+        <div class="variant-label">
+          <strong>A · Тихий портал</strong>
+          <span>самый Hizo</span>
+        </div>
+        <div class="phone">
+          <div class="screen">
+            <div class="status-bar">
+              <span>9:41</span>
+              <span class="system-icons" aria-hidden="true">
+                <span class="signal"><i></i><i></i></span>
+                <span class="battery"></span>
+              </span>
+            </div>
+
+            <div class="top-row">
+              <div class="identity-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M4 11.5 12 5l8 6.5"></path>
+                  <path d="M6.5 10.5V20h11v-9.5"></path>
+                  <path d="M10 20v-5h4v5"></path>
+                </svg>
+              </div>
+              <div class="metric-cluster">
+                <div class="metric-chip">
+                  <img src="../../source/assets/2026-06-26_reward_fire_3d_icon.png" alt="">
+                  <span>7</span>
+                </div>
+                <div class="metric-chip">
+                  <img src="../../source/assets/2026-06-26_reward_coins_3d_icon.png" alt="">
+                  <span>123</span>
+                </div>
+              </div>
+            </div>
+
+            <section class="finik-zone compact" aria-label="Финик">
+              <div class="finik-copy">
+                <span class="kicker">3 минуты до серии</span>
+                <h2>Открыть место</h2>
+              </div>
+              <img class="finik-img" src="../../source/assets/2026-06-26_finik_hizo_duolingo_alpha.png" alt="Финик с книгой">
+            </section>
+
+            <section class="portal-card" aria-label="Текущая книга">
+              <div class="scene lamp-scene" aria-hidden="true">
+                <div class="lamp-beam"></div>
+                <div class="desk-line"></div>
+                <div class="open-book">
+                  <span class="page left"></span>
+                  <span class="book-spine"></span>
+                  <span class="page right"></span>
+                </div>
+                <div class="scene-label">
+                  <strong>Глава 3</strong>
+                  <span>место паузы</span>
+                </div>
+              </div>
+
+              <div class="book-meta">
+                <div class="cover" aria-hidden="true">
+                  <strong>М</strong>
+                  <span>гл. 3</span>
+                </div>
+                <div class="book-lines">
+                  <h3>Мастер и Маргарита</h3>
+                  <p>Глава 3 · осталось 3 минуты</p>
+                </div>
+              </div>
+
+              <div class="progress-row" aria-label="Прогресс книги 42 процента">
+                <div class="progress-labels">
+                  <strong>42% книги</strong>
+                  <span>темп сохранён</span>
+                </div>
+                <div class="progress"><div class="progress-fill"></div></div>
+              </div>
+
+              <div class="win-line">
+                <span class="win-icon"><img src="../../source/assets/2026-06-26_reward_ruby_whole_3d_icon.png" alt=""></span>
+                <div>
+                  <span>близкая награда</span>
+                  <strong>4 карточки до рубина</strong>
+                </div>
+              </div>
+
+              <button class="portal-button" type="button">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                  <path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"></path>
+                </svg>
+                <span>Продолжить чтение</span>
+              </button>
+            </section>
+
+            <nav class="bottom-nav" aria-label="Основная навигация">
+              <button class="nav-item active" type="button" aria-label="Домой">
+                <span class="nav-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M4 11.5 12 5l8 6.5"></path>
+                    <path d="M6.5 10.5V20h11v-9.5"></path>
+                    <path d="M10 20v-5h4v5"></path>
+                  </svg>
+                </span>
+              </button>
+              <button class="nav-item" type="button" aria-label="Путь">
+                <span class="nav-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M6 7h7a3 3 0 0 1 0 6H9a3 3 0 0 0 0 6h9"></path>
+                    <path d="M6 7h.01"></path>
+                    <path d="M18 19h.01"></path>
+                  </svg>
+                </span>
+              </button>
+              <button class="nav-item" type="button" aria-label="Книги">
+                <span class="nav-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                    <path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"></path>
+                  </svg>
+                </span>
+              </button>
+              <button class="nav-item" type="button" aria-label="Профиль">
+                <span class="nav-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"></path>
+                    <path d="M4.5 21a7.5 7.5 0 0 1 15 0"></path>
+                  </svg>
+                </span>
+              </button>
+            </nav>
+          </div>
+        </div>
+      </article>
+
+      <article class="variant variant-b">
+        <div class="variant-label">
+          <strong>B · Сцена главы</strong>
+          <span>самый эмоциональный</span>
+        </div>
+        <div class="phone">
+          <div class="screen">
+            <div class="status-bar">
+              <span>9:41</span>
+              <span class="system-icons" aria-hidden="true">
+                <span class="signal"><i></i><i></i></span>
+                <span class="battery"></span>
+              </span>
+            </div>
+
+            <div class="top-row">
+              <div class="identity-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M4 11.5 12 5l8 6.5"></path>
+                  <path d="M6.5 10.5V20h11v-9.5"></path>
+                  <path d="M10 20v-5h4v5"></path>
+                </svg>
+              </div>
+              <div class="metric-cluster">
+                <div class="metric-chip">
+                  <img src="../../source/assets/2026-06-26_reward_fire_3d_icon.png" alt="">
+                  <span>7</span>
+                </div>
+                <div class="metric-chip">
+                  <img src="../../source/assets/2026-06-26_reward_coins_3d_icon.png" alt="">
+                  <span>123</span>
+                </div>
+              </div>
+            </div>
+
+            <section class="finik-zone compact" aria-label="Финик">
+              <div class="finik-copy">
+                <span class="kicker">место паузы</span>
+                <h2>Продолжим?</h2>
+              </div>
+              <img class="finik-img" src="../../source/assets/2026-06-26_finik_hizo_duolingo_alpha.png" alt="Финик с книгой">
+            </section>
+
+            <section class="portal-card" aria-label="Текущая книга">
+              <div class="scene city-scene" aria-hidden="true">
+                <img class="scene-art" src="./2026-07-02_chapter-portal-dream-memory.png" alt="">
+                <span class="memory-cue">место паузы</span>
+                <span class="city-moon"></span>
+                <span class="roof one"><i class="window-dot"></i></span>
+                <span class="roof two"><i class="window-dot"></i></span>
+                <div class="scene-label">
+                  <strong>Глава 3 · Явление героя</strong>
+                </div>
+              </div>
+
+              <div class="book-meta">
+                <div class="cover" aria-hidden="true">
+                  <strong>М</strong>
+                  <span>гл. 3</span>
+                </div>
+                <div class="book-lines">
+                  <h3>Мастер и Маргарита</h3>
+                  <p>Явление героя · нужное место открыто</p>
+                </div>
+              </div>
+
+              <div class="progress-row" aria-label="Прогресс книги 42 процента">
+                <div class="progress-labels">
+                  <strong>42% книги</strong>
+                  <span>серия рядом</span>
+                </div>
+                <div class="progress"><div class="progress-fill"></div></div>
+              </div>
+
+              <div class="win-line">
+                <span class="win-icon"><img src="../../source/assets/2026-06-26_reward_fire_3d_icon.png" alt=""></span>
+                <div>
+                  <span>маленькая победа</span>
+                  <strong>Ещё 3 минуты — и серия сохранена</strong>
+                </div>
+              </div>
+
+              <button class="portal-button" type="button">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                  <path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"></path>
+                </svg>
+                <span>Продолжить чтение</span>
+              </button>
+            </section>
+
+            <nav class="bottom-nav" aria-label="Основная навигация">
+              <button class="nav-item active" type="button" aria-label="Домой">
+                <span class="nav-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M4 11.5 12 5l8 6.5"></path>
+                    <path d="M6.5 10.5V20h11v-9.5"></path>
+                    <path d="M10 20v-5h4v5"></path>
+                  </svg>
+                </span>
+              </button>
+              <button class="nav-item" type="button" aria-label="Путь">
+                <span class="nav-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M6 7h7a3 3 0 0 1 0 6H9a3 3 0 0 0 0 6h9"></path>
+                    <path d="M6 7h.01"></path>
+                    <path d="M18 19h.01"></path>
+                  </svg>
+                </span>
+              </button>
+              <button class="nav-item" type="button" aria-label="Книги">
+                <span class="nav-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                    <path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"></path>
+                  </svg>
+                </span>
+              </button>
+              <button class="nav-item" type="button" aria-label="Профиль">
+                <span class="nav-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"></path>
+                    <path d="M4.5 21a7.5 7.5 0 0 1 15 0"></path>
+                  </svg>
+                </span>
+              </button>
+            </nav>
+          </div>
+        </div>
+      </article>
+
+      <article class="variant variant-c">
+        <div class="variant-label">
+          <strong>C · Награда рядом</strong>
+          <span>самый Duolingo</span>
+        </div>
+        <div class="phone">
+          <div class="screen">
+            <div class="status-bar">
+              <span>9:41</span>
+              <span class="system-icons" aria-hidden="true">
+                <span class="signal"><i></i><i></i></span>
+                <span class="battery"></span>
+              </span>
+            </div>
+
+            <div class="top-row">
+              <div class="identity-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M4 11.5 12 5l8 6.5"></path>
+                  <path d="M6.5 10.5V20h11v-9.5"></path>
+                  <path d="M10 20v-5h4v5"></path>
+                </svg>
+              </div>
+              <div class="metric-cluster">
+                <div class="metric-chip">
+                  <img src="../../source/assets/2026-06-26_reward_fire_3d_icon.png" alt="">
+                  <span>7</span>
+                </div>
+                <div class="metric-chip">
+                  <img src="../../source/assets/2026-06-26_reward_coins_3d_icon.png" alt="">
+                  <span>123</span>
+                </div>
+              </div>
+            </div>
+
+            <section class="finik-zone compact" aria-label="Финик">
+              <div class="finik-copy">
+                <span class="kicker">4 карточки</span>
+                <h2>Рубин близко</h2>
+              </div>
+              <img class="finik-img" src="../../source/assets/2026-06-26_finik_hizo_duolingo_alpha.png" alt="Финик с книгой">
+            </section>
+
+            <section class="portal-card" aria-label="Текущая книга">
+              <div class="scene reward-scene" aria-hidden="true">
+                <span class="reward-glow"></span>
+                <span class="spark-line"><span></span><span></span><span></span></span>
+                <img class="reward-ruby" src="../../source/assets/2026-06-26_reward_ruby_whole_3d_icon.png" alt="">
+                <div class="scene-label">
+                  <strong>Рубин рядом</strong>
+                  <span>4 карточки</span>
+                </div>
+              </div>
+
+              <div class="book-meta">
+                <div class="cover" aria-hidden="true">
+                  <strong>М</strong>
+                  <span>гл. 3</span>
+                </div>
+                <div class="book-lines">
+                  <h3>Мастер и Маргарита</h3>
+                  <p>Глава 3 · нужное место открыто</p>
+                </div>
+              </div>
+
+              <div class="progress-row" aria-label="Прогресс книги 42 процента">
+                <div class="progress-labels">
+                  <strong>42% книги</strong>
+                  <span>цель рядом</span>
+                </div>
+                <div class="progress"><div class="progress-fill"></div></div>
+              </div>
+
+              <div class="quest-strip">
+                <div class="quest-text">
+                  <span>мини-квест</span>
+                  <strong>4 карточки до рубина</strong>
+                </div>
+                <div class="quest-icons" aria-hidden="true">
+                  <img src="../../source/assets/2026-06-26_reward_fire_3d_icon.png" alt="">
+                  <img src="../../source/assets/2026-06-26_reward_ruby_whole_3d_icon.png" alt="">
+                </div>
+              </div>
+
+              <button class="portal-button" type="button">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                  <path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"></path>
+                </svg>
+                <span>Продолжить чтение</span>
+              </button>
+            </section>
+
+            <nav class="bottom-nav" aria-label="Основная навигация">
+              <button class="nav-item active" type="button" aria-label="Домой">
+                <span class="nav-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M4 11.5 12 5l8 6.5"></path>
+                    <path d="M6.5 10.5V20h11v-9.5"></path>
+                    <path d="M10 20v-5h4v5"></path>
+                  </svg>
+                </span>
+              </button>
+              <button class="nav-item" type="button" aria-label="Путь">
+                <span class="nav-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M6 7h7a3 3 0 0 1 0 6H9a3 3 0 0 0 0 6h9"></path>
+                    <path d="M6 7h.01"></path>
+                    <path d="M18 19h.01"></path>
+                  </svg>
+                </span>
+              </button>
+              <button class="nav-item" type="button" aria-label="Книги">
+                <span class="nav-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                    <path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"></path>
+                  </svg>
+                </span>
+              </button>
+              <button class="nav-item" type="button" aria-label="Профиль">
+                <span class="nav-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"></path>
+                    <path d="M4.5 21a7.5 7.5 0 0 1 15 0"></path>
+                  </svg>
+                </span>
+              </button>
+            </nav>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

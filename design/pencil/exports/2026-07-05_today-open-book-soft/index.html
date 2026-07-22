@@ -1,0 +1,641 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ReadQuest Today - Open Book Soft</title>
+  <style>
+    :root {
+      --paper: #FAF6EF;
+      --paper-deep: #F2E6D2;
+      --surface: #FFFDF8;
+      --surface-warm: #FBF2E4;
+      --ink: #2C241D;
+      --text: #5F5349;
+      --muted: #95877A;
+      --sage: #2F765D;
+      --sage-soft: #DDEADD;
+      --gold: #D9A441;
+      --amber: #F2B84B;
+      --line: rgba(44, 36, 29, 0.12);
+      --shadow: rgba(44, 36, 29, 0.14);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-height: 100%;
+      background:
+        radial-gradient(circle at 22% 16%, rgba(217, 164, 65, 0.16), transparent 24%),
+        linear-gradient(145deg, #EFE8DE 0%, #F8F2E9 54%, #E6ECE5 100%);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      margin: 0;
+      padding: 32px 16px;
+    }
+
+    h1,
+    h2,
+    p {
+      margin: 0;
+    }
+
+    button,
+    a {
+      font: inherit;
+    }
+
+    .phone {
+      width: 390px;
+      min-height: 844px;
+      overflow: hidden;
+      border: 10px solid #27231F;
+      border-radius: 46px;
+      background: var(--paper);
+      box-shadow:
+        0 34px 80px rgba(44, 36, 29, 0.28),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.22);
+    }
+
+    .screen {
+      min-height: 824px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      position: relative;
+      overflow: hidden;
+      border-radius: 36px;
+      background:
+        radial-gradient(circle at 84% 8%, rgba(217, 164, 65, 0.16), transparent 28%),
+        radial-gradient(circle at 14% 42%, rgba(47, 118, 93, 0.08), transparent 30%),
+        linear-gradient(180deg, #FFF8EC 0%, #F9F0E5 54%, #F2E9DA 100%);
+    }
+
+    .screen::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        radial-gradient(rgba(44, 36, 29, 0.05) 0.7px, transparent 0.7px);
+      background-size: 12px 12px;
+      opacity: 0.28;
+      mix-blend-mode: multiply;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      align-content: start;
+      gap: 18px;
+      padding: 16px 18px 18px;
+    }
+
+    .status {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      min-height: 28px;
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 760;
+    }
+
+    .system-icons {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: rgba(44, 36, 29, 0.68);
+    }
+
+    .battery {
+      width: 24px;
+      height: 12px;
+      position: relative;
+      border: 1.5px solid currentColor;
+      border-radius: 4px;
+    }
+
+    .battery::before {
+      content: "";
+      position: absolute;
+      inset: 2px 7px 2px 2px;
+      border-radius: 2px;
+      background: currentColor;
+    }
+
+    .battery::after {
+      content: "";
+      position: absolute;
+      right: -4px;
+      top: 3px;
+      width: 2px;
+      height: 5px;
+      border-radius: 1px;
+      background: currentColor;
+    }
+
+    .topline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .finik {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      min-width: 0;
+    }
+
+    .finik-face {
+      width: 42px;
+      height: 42px;
+      position: relative;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.78);
+      border-radius: 16px;
+      background:
+        radial-gradient(circle at 50% 58%, #F1C27D 0 40%, transparent 41%),
+        linear-gradient(180deg, #FFF2D8, #E8AD66);
+      box-shadow:
+        0 10px 24px rgba(132, 87, 36, 0.16),
+        inset 0 1px 0 rgba(255, 255, 255, 0.84);
+    }
+
+    .finik-face::before,
+    .finik-face::after {
+      content: "";
+      position: absolute;
+      top: -8px;
+      width: 17px;
+      height: 24px;
+      border-radius: 50% 50% 45% 45%;
+      background: linear-gradient(180deg, #F9D7A2, #E3A55D);
+      box-shadow: inset 0 0 0 5px rgba(255, 245, 218, 0.54);
+    }
+
+    .finik-face::before {
+      left: 4px;
+      transform: rotate(-26deg);
+    }
+
+    .finik-face::after {
+      right: 4px;
+      transform: rotate(26deg);
+    }
+
+    .glasses {
+      width: 26px;
+      height: 11px;
+      position: relative;
+      z-index: 1;
+      border-radius: 999px;
+    }
+
+    .glasses::before,
+    .glasses::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      width: 11px;
+      height: 11px;
+      border: 2px solid #365845;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.16);
+    }
+
+    .glasses::before {
+      left: 0;
+    }
+
+    .glasses::after {
+      right: 0;
+    }
+
+    .bridge {
+      position: absolute;
+      left: 11px;
+      top: 5px;
+      width: 4px;
+      height: 2px;
+      background: #365845;
+    }
+
+    .finik-copy {
+      display: grid;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .finik-copy strong {
+      font-size: 15px;
+      line-height: 1.16;
+      letter-spacing: 0;
+    }
+
+    .finik-copy span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.2;
+      font-weight: 660;
+    }
+
+    .metrics {
+      display: flex;
+      gap: 7px;
+    }
+
+    .metric {
+      min-height: 34px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid rgba(47, 118, 93, 0.15);
+      border-radius: 999px;
+      background: rgba(255, 253, 248, 0.7);
+      padding: 0 10px;
+      color: var(--sage);
+      font-size: 12px;
+      font-weight: 780;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72);
+    }
+
+    .portal {
+      position: relative;
+      min-height: 148px;
+      overflow: hidden;
+      display: block;
+      border-radius: 34px;
+      color: var(--sage);
+      text-decoration: none;
+      transform: translateZ(0);
+      box-shadow:
+        0 24px 42px rgba(122, 84, 32, 0.18),
+        0 4px 0 rgba(176, 128, 58, 0.08);
+    }
+
+    .portal::after {
+      content: "";
+      position: absolute;
+      inset: 1px;
+      border: 1px solid rgba(217, 164, 65, 0.26);
+      border-radius: 33px;
+      pointer-events: none;
+    }
+
+    .portal:active {
+      transform: translateY(1px);
+      box-shadow:
+        0 16px 32px rgba(122, 84, 32, 0.16),
+        0 2px 0 rgba(176, 128, 58, 0.08);
+    }
+
+    .portal img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .portal-copy {
+      position: relative;
+      z-index: 1;
+      width: 54%;
+      min-height: 148px;
+      margin-left: auto;
+      display: grid;
+      align-content: center;
+      gap: 4px;
+      padding: 18px 18px 18px 6px;
+      text-align: left;
+    }
+
+    .portal-copy span {
+      color: rgba(47, 118, 93, 0.78);
+      font-size: 12px;
+      line-height: 1.2;
+      font-weight: 760;
+    }
+
+    .portal-copy strong {
+      color: var(--sage);
+      font-size: 30px;
+      line-height: 0.98;
+      letter-spacing: 0;
+    }
+
+    .portal-copy em {
+      color: #7B6B58;
+      font-style: normal;
+      font-size: 12px;
+      line-height: 1.25;
+      font-weight: 720;
+    }
+
+    .book-strip {
+      display: grid;
+      gap: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.72);
+      border-radius: 22px;
+      background: rgba(255, 253, 248, 0.76);
+      padding: 16px;
+      box-shadow:
+        0 16px 30px rgba(44, 36, 29, 0.09),
+        inset 0 1px 0 rgba(255, 255, 255, 0.78);
+    }
+
+    .book-line {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .book-line strong {
+      color: var(--ink);
+      font-size: 18px;
+      line-height: 1.18;
+      letter-spacing: 0;
+    }
+
+    .book-line span {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 760;
+      white-space: nowrap;
+    }
+
+    .progress {
+      height: 9px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(47, 118, 93, 0.11);
+    }
+
+    .progress div {
+      width: 42%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #6FA866, #2F765D);
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.24) inset;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .card {
+      min-height: 132px;
+      display: grid;
+      align-content: space-between;
+      gap: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.72);
+      border-radius: 22px;
+      background: rgba(255, 253, 248, 0.72);
+      padding: 15px;
+      box-shadow:
+        0 14px 26px rgba(44, 36, 29, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.78);
+    }
+
+    .card.reward {
+      background:
+        radial-gradient(circle at 82% 18%, rgba(217, 164, 65, 0.22), transparent 38%),
+        rgba(255, 253, 248, 0.78);
+    }
+
+    .card h2 {
+      color: var(--ink);
+      font-size: 15px;
+      line-height: 1.16;
+      letter-spacing: 0;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+      font-weight: 650;
+    }
+
+    .small-progress {
+      display: grid;
+      gap: 7px;
+    }
+
+    .small-progress .track {
+      height: 8px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(217, 164, 65, 0.18);
+    }
+
+    .small-progress .fill {
+      width: 72%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--amber), var(--gold));
+    }
+
+    .reward-gem {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      background:
+        linear-gradient(145deg, rgba(255, 244, 209, 0.92), rgba(217, 164, 65, 0.2));
+      color: #8E641B;
+      font-size: 22px;
+      font-weight: 900;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.74);
+    }
+
+    .hint {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border: 1px solid rgba(47, 118, 93, 0.12);
+      border-radius: 24px;
+      background: rgba(221, 234, 221, 0.54);
+      padding: 13px;
+    }
+
+    .hint .mini {
+      width: 36px;
+      height: 36px;
+      flex: 0 0 auto;
+      border-radius: 14px;
+      background:
+        radial-gradient(circle at 50% 62%, #F1C27D 0 42%, transparent 43%),
+        linear-gradient(180deg, #FFF1D3, #E7AE66);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.76);
+    }
+
+    .hint p {
+      color: #405C49;
+      font-size: 13px;
+      line-height: 1.35;
+      font-weight: 720;
+    }
+
+    .bottom-nav {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px 22px;
+      background:
+        linear-gradient(180deg, rgba(250, 246, 239, 0), rgba(250, 246, 239, 0.94) 34%, rgba(250, 246, 239, 0.98));
+    }
+
+    .nav-item {
+      min-height: 46px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 18px;
+      background: transparent;
+      color: rgba(95, 83, 73, 0.62);
+    }
+
+    .nav-item.active {
+      background: rgba(47, 118, 93, 0.1);
+      color: var(--sage);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    }
+
+    .nav-item svg {
+      width: 23px;
+      height: 23px;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+    }
+
+    @media (max-width: 430px) {
+      body {
+        padding: 0;
+        place-items: stretch;
+      }
+
+      .phone {
+        width: 100%;
+        min-height: 100vh;
+        border: 0;
+        border-radius: 0;
+      }
+
+      .screen {
+        min-height: 100vh;
+        border-radius: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="phone" aria-label="Экран ReadQuest Сегодня">
+    <div class="screen">
+      <section class="content">
+        <div class="status" aria-hidden="true">
+          <span>9:41</span>
+          <span class="system-icons">5G <span class="battery"></span></span>
+        </div>
+
+        <div class="topline">
+          <div class="finik" aria-label="Финик">
+            <div class="finik-face" aria-hidden="true">
+              <span class="glasses"><span class="bridge"></span></span>
+            </div>
+            <div class="finik-copy">
+              <strong>Финик рядом</strong>
+              <span>Место сохранено</span>
+            </div>
+          </div>
+
+          <div class="metrics" aria-label="Прогресс">
+            <span class="metric">7 дней</span>
+            <span class="metric">128</span>
+          </div>
+        </div>
+
+        <a class="portal" href="#" aria-label="Открыть книгу и продолжить чтение">
+          <img src="./assets/open-book-cta.png" alt="">
+          <span class="portal-copy">
+            <span>Мастер и Маргарита</span>
+            <strong>Открыть книгу</strong>
+            <em>Глава 3 · осталось 3 минуты</em>
+          </span>
+        </a>
+
+        <section class="book-strip" aria-label="Текущая книга">
+          <div class="book-line">
+            <strong>Глава 3 · Явление героя</strong>
+            <span>42%</span>
+          </div>
+          <div class="progress" aria-hidden="true"><div></div></div>
+        </section>
+
+        <section class="grid" aria-label="Ближайшая мотивация">
+          <article class="card">
+            <div>
+              <h2>Сегодняшний шаг</h2>
+              <p>2:35 / 5:00</p>
+            </div>
+            <div class="small-progress" aria-hidden="true">
+              <div class="track"><div class="fill"></div></div>
+            </div>
+          </article>
+
+          <article class="card reward">
+            <div class="reward-gem" aria-hidden="true">◆</div>
+            <div>
+              <h2>Награда близко</h2>
+              <p>Один блок до рубина</p>
+            </div>
+          </article>
+        </section>
+
+        <aside class="hint" aria-label="Подсказка Финика">
+          <div class="mini" aria-hidden="true"></div>
+          <p>Откроем одну сцену и сохраним серию.</p>
+        </aside>
+      </section>
+
+      <nav class="bottom-nav" aria-label="Нижняя навигация">
+        <button class="nav-item active" aria-label="Домик">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11.5 12 5l8 6.5"/><path d="M6.5 10.5V20h11v-9.5"/><path d="M10 20v-5h4v5"/></svg>
+        </button>
+        <button class="nav-item" aria-label="Путь">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 18c4-1 3-6 7-6s3-5 6-6"/><path d="M5 18a2 2 0 1 0 4 0 2 2 0 0 0-4 0Z"/><path d="M11 12a2 2 0 1 0 4 0 2 2 0 0 0-4 0Z"/><path d="M17 6a2 2 0 1 0 4 0 2 2 0 0 0-4 0Z"/></svg>
+        </button>
+        <button class="nav-item" aria-label="Книги">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5.5h7A3.5 3.5 0 0 1 15.5 9v10H8.5A3.5 3.5 0 0 0 5 15.5Z"/><path d="M19 5.5h-3.5A3.5 3.5 0 0 0 12 9v10h3.5a3.5 3.5 0 0 1 3.5-3.5Z"/></svg>
+        </button>
+        <button class="nav-item" aria-label="Профиль">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/><path d="M5 20a7 7 0 0 1 14 0"/></svg>
+        </button>
+      </nav>
+    </div>
+  </main>
+</body>
+</html>

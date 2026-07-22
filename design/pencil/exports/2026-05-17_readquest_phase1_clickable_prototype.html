@@ -1,0 +1,1030 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ReadQuest — прототип первой версии</title>
+  <style>
+    :root {
+      --bg-paper: #FAF6EF;
+      --bg-warm: #F8F1E7;
+      --surface-card: #FFFFFF;
+      --surface-sepia: #F2E6D2;
+      --surface-lavender: #F1E8FA;
+      --text-primary: #2C241D;
+      --text-secondary: #6F6257;
+      --text-muted: #9A8D82;
+      --accent-lavender: #9C7AC9;
+      --accent-lavender-soft: #D8C2F0;
+      --accent-sage: #6FA866;
+      --accent-gold: #D9A441;
+      --accent-amber: #F2B84B;
+      --state-locked: #C9C3BA;
+      --state-error: #C95C5C;
+      --shadow-card: 0 10px 30px rgba(44, 36, 29, 0.08);
+      --shadow-soft: 0 6px 20px rgba(44, 36, 29, 0.08);
+      --radius-sm: 10px;
+      --radius-md: 16px;
+      --radius-lg: 22px;
+      --radius-xl: 28px;
+      --space-4: 4px;
+      --space-8: 8px;
+      --space-12: 12px;
+      --space-16: 16px;
+      --space-20: 20px;
+      --space-24: 24px;
+      --space-32: 32px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text-primary);
+      background:
+        radial-gradient(circle at 22% 10%, rgba(156, 122, 201, 0.14), transparent 30%),
+        linear-gradient(135deg, #efe2d0, #faf6ef 52%, #efe7f4);
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .stage {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+      padding: 32px 20px 42px;
+      display: grid;
+      grid-template-columns: 320px minmax(390px, 1fr);
+      gap: 28px;
+      align-items: start;
+    }
+
+    .side {
+      background: rgba(255, 255, 255, 0.58);
+      border: 1px solid rgba(255, 255, 255, 0.72);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-card);
+      padding: 22px;
+      position: sticky;
+      top: 20px;
+    }
+
+    .side h1 {
+      margin: 0 0 8px;
+      font-size: 26px;
+      line-height: 1.15;
+      letter-spacing: 0;
+    }
+
+    .side p {
+      margin: 0;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      font-size: 15px;
+    }
+
+    .flow-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    .flow-button {
+      min-height: 44px;
+      border: 0;
+      text-align: left;
+      border-radius: 14px;
+      padding: 11px 12px;
+      color: var(--text-secondary);
+      background: rgba(255, 255, 255, 0.62);
+      cursor: pointer;
+    }
+
+    .flow-button.active {
+      color: var(--text-primary);
+      background: var(--surface-lavender);
+      box-shadow: inset 0 0 0 1px rgba(156, 122, 201, 0.22);
+      font-weight: 700;
+    }
+
+    .note {
+      margin-top: 20px;
+      padding: 14px;
+      border-radius: 16px;
+      background: rgba(242, 230, 210, 0.72);
+      color: var(--text-secondary);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .phone-shell {
+      width: 390px;
+      min-height: 812px;
+      margin: 0 auto;
+      border-radius: 42px;
+      padding: 12px;
+      background: #201b17;
+      box-shadow: 0 28px 80px rgba(44, 36, 29, 0.28);
+    }
+
+    .phone {
+      min-height: 788px;
+      overflow: hidden;
+      border-radius: 32px;
+      background: var(--bg-paper);
+      position: relative;
+    }
+
+    .screen {
+      display: none;
+      min-height: 788px;
+      padding: 22px 18px 92px;
+      background: var(--bg-paper);
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    .screen.reader {
+      padding-bottom: 24px;
+      background: #f7eddf;
+    }
+
+    .top-row {
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .title {
+      margin: 0;
+      font-size: 28px;
+      line-height: 1.12;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      margin: 8px 0 0;
+      color: var(--text-secondary);
+      font-size: 16px;
+      line-height: 1.48;
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 800;
+      margin: 0 0 10px;
+    }
+
+    .card {
+      border-radius: var(--radius-lg);
+      background: var(--surface-card);
+      box-shadow: var(--shadow-card);
+      padding: 18px;
+    }
+
+    .card.soft {
+      background: rgba(255, 255, 255, 0.72);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .card.sepia {
+      background: var(--surface-sepia);
+    }
+
+    .primary,
+    .secondary,
+    .ghost {
+      width: 100%;
+      min-height: 50px;
+      border-radius: 18px;
+      border: 0;
+      padding: 14px 18px;
+      cursor: pointer;
+      font-weight: 800;
+    }
+
+    .primary {
+      color: #fff;
+      background: var(--accent-lavender);
+      box-shadow: 0 10px 22px rgba(156, 122, 201, 0.26);
+    }
+
+    .secondary {
+      color: var(--text-primary);
+      background: var(--surface-card);
+      box-shadow: inset 0 0 0 1px rgba(111, 98, 87, 0.13);
+    }
+
+    .ghost {
+      color: var(--text-secondary);
+      background: transparent;
+    }
+
+    .stack {
+      display: grid;
+      gap: 12px;
+    }
+
+    .hero-gap {
+      height: 24px;
+    }
+
+    .mascot {
+      width: 170px;
+      margin: 8px auto 20px;
+      display: block;
+    }
+
+    .mini-mascot {
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      background: var(--surface-sepia);
+      box-shadow: inset 0 0 0 1px rgba(44, 36, 29, 0.08);
+      display: grid;
+      place-items: center;
+    }
+
+    .metrics {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .metric {
+      min-height: 32px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.72);
+      color: var(--text-secondary);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .book-hero {
+      display: grid;
+      grid-template-columns: 86px 1fr;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .cover {
+      width: 86px;
+      height: 126px;
+      border-radius: 15px;
+      background:
+        linear-gradient(145deg, rgba(156, 122, 201, 0.75), rgba(111, 168, 102, 0.55)),
+        linear-gradient(180deg, #f6eadc, #c8a56b);
+      box-shadow: 0 14px 28px rgba(44, 36, 29, 0.18);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cover:after {
+      content: "";
+      position: absolute;
+      inset: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.48);
+      border-radius: 10px;
+    }
+
+    .book-title {
+      margin: 0;
+      font-size: 20px;
+      line-height: 1.2;
+    }
+
+    .book-meta {
+      margin: 5px 0 12px;
+      color: var(--text-secondary);
+      line-height: 1.35;
+      font-size: 13px;
+    }
+
+    .bar {
+      height: 9px;
+      border-radius: 999px;
+      background: rgba(154, 141, 130, 0.22);
+      overflow: hidden;
+    }
+
+    .bar > span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: var(--accent-lavender);
+    }
+
+    .goal-grid {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      align-items: end;
+    }
+
+    .goal-time {
+      font-size: 20px;
+      font-weight: 900;
+    }
+
+    .chips {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      min-height: 38px;
+      border: 0;
+      border-radius: 999px;
+      background: var(--surface-card);
+      color: var(--text-secondary);
+      padding: 9px 12px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .wins {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .win {
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.72);
+      padding: 12px 8px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-secondary);
+      font-weight: 700;
+    }
+
+    .reader-top {
+      display: grid;
+      grid-template-columns: 44px 1fr 44px 44px;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .icon {
+      min-width: 44px;
+      min-height: 44px;
+      border: 0;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.76);
+      color: var(--text-primary);
+      cursor: pointer;
+      font-weight: 900;
+    }
+
+    .reader-chapter {
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .reading-card {
+      min-height: 460px;
+      border-radius: 28px;
+      background: #fffaf2;
+      box-shadow: var(--shadow-card);
+      padding: 30px 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .card-count {
+      color: var(--text-muted);
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 18px;
+    }
+
+    .reader-text {
+      font-size: 20px;
+      line-height: 1.62;
+      margin: 0;
+    }
+
+    .reader-bottom {
+      display: grid;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .reader-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .sheet {
+      margin-top: 18px;
+      border-radius: 26px 26px 0 0;
+      background: var(--surface-card);
+      padding: 18px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .segmented {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .segment {
+      min-height: 38px;
+      border: 0;
+      border-radius: 999px;
+      background: var(--bg-warm);
+      color: var(--text-secondary);
+      font-weight: 800;
+    }
+
+    .segment.active {
+      background: var(--surface-lavender);
+      color: var(--text-primary);
+    }
+
+    .reward-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .reward {
+      border-radius: 18px;
+      background: var(--bg-warm);
+      padding: 14px;
+      text-align: center;
+      font-weight: 900;
+    }
+
+    .path-map {
+      position: relative;
+      padding: 12px 0 10px;
+    }
+
+    .path-line {
+      position: absolute;
+      left: 50%;
+      top: 24px;
+      bottom: 24px;
+      width: 5px;
+      transform: translateX(-50%);
+      border-radius: 999px;
+      background: linear-gradient(var(--accent-sage), var(--accent-lavender-soft), var(--state-locked));
+      opacity: 0.5;
+    }
+
+    .node-row {
+      position: relative;
+      display: flex;
+      align-items: center;
+      min-height: 82px;
+    }
+
+    .node-row:nth-child(odd) {
+      justify-content: flex-start;
+      padding-left: 20px;
+    }
+
+    .node-row:nth-child(even) {
+      justify-content: flex-end;
+      padding-right: 20px;
+    }
+
+    .node {
+      width: 158px;
+      min-height: 58px;
+      border: 0;
+      border-radius: 22px;
+      background: var(--surface-card);
+      color: var(--text-secondary);
+      box-shadow: var(--shadow-soft);
+      padding: 10px 12px;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .node strong {
+      display: block;
+      color: var(--text-primary);
+      font-size: 14px;
+      margin-bottom: 2px;
+    }
+
+    .node.completed {
+      box-shadow: inset 0 0 0 2px rgba(111, 168, 102, 0.28), var(--shadow-soft);
+    }
+
+    .node.current {
+      background: var(--surface-lavender);
+      box-shadow: 0 10px 30px rgba(156, 122, 201, 0.25);
+    }
+
+    .node.locked {
+      background: #eee8df;
+      color: #8f847b;
+      box-shadow: none;
+    }
+
+    .nav {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 76px;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(14px);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid rgba(44, 36, 29, 0.08);
+      padding: 8px 10px 12px;
+    }
+
+    .nav button {
+      border: 0;
+      background: transparent;
+      border-radius: 16px;
+      color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .nav button.active {
+      color: var(--text-primary);
+      background: var(--surface-lavender);
+    }
+
+    .book-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .book-row {
+      display: grid;
+      grid-template-columns: 54px 1fr 44px;
+      gap: 12px;
+      align-items: center;
+      border-radius: 18px;
+      background: var(--surface-card);
+      padding: 10px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .small-cover {
+      width: 54px;
+      height: 72px;
+      border-radius: 12px;
+      background: linear-gradient(145deg, #ceb4e8, #efd19a);
+    }
+
+    .muted {
+      color: var(--text-muted);
+    }
+
+    .small {
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .hidden-sheet {
+      display: none;
+    }
+
+    .hint-card {
+      display: grid;
+      grid-template-columns: 46px 1fr;
+      gap: 12px;
+      align-items: center;
+      padding: 14px;
+      border-radius: 22px;
+      background: var(--surface-sepia);
+      color: var(--text-secondary);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    @media (max-width: 880px) {
+      .stage {
+        grid-template-columns: 1fr;
+      }
+      .side {
+        position: static;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="stage">
+    <aside class="side">
+      <h1>ReadQuest · первая версия</h1>
+      <p>Кликабельный визуальный прототип для проверки пути чтения до реализации в приложении. Он заменяет ранний Pencil/Figma-макет, пока дизайн-инструменты не подключены.</p>
+      <div class="flow-list" aria-label="Экраны прототипа">
+        <button class="flow-button active" data-target="welcome">01 Приветствие</button>
+        <button class="flow-button" data-target="preparing">02 Подготовка книги</button>
+        <button class="flow-button" data-target="ready">03 Книга готова</button>
+        <button class="flow-button" data-target="today">04 Сегодня</button>
+        <button class="flow-button" data-target="reader">05 Чтение</button>
+        <button class="flow-button" data-target="settings">06 Настройки чтения</button>
+        <button class="flow-button" data-target="summary">07 Итог сессии</button>
+        <button class="flow-button" data-target="reminder">08 Напоминание</button>
+        <button class="flow-button" data-target="path">09 Путь</button>
+        <button class="flow-button" data-target="achievement">10 Достижение</button>
+        <button class="flow-button" data-target="library">11 Библиотека</button>
+      </div>
+      <div class="note">
+        Правило прототипа: «Сегодня» и «Чтение» важнее карты. Награды должны возвращать к чтению, а не перетягивать продукт на себя.
+      </div>
+    </aside>
+
+    <section class="phone-shell" aria-label="Прототип телефона">
+      <div class="phone">
+        <section class="screen active" id="welcome">
+          <div class="hero-gap"></div>
+          <svg class="mascot" viewBox="0 0 180 150" role="img" aria-label="Фенек в очках с книгой">
+            <path d="M35 55 L18 10 L68 38 Z" fill="#E9CFA8"/>
+            <path d="M145 55 L162 10 L112 38 Z" fill="#E9CFA8"/>
+            <path d="M45 66 C46 35 134 35 135 66 C145 105 120 132 90 132 C60 132 35 105 45 66Z" fill="#EBCB9C"/>
+            <path d="M70 76 C70 66 83 66 83 76 C83 86 70 86 70 76Z" fill="none" stroke="#2C241D" stroke-width="5"/>
+            <path d="M97 76 C97 66 110 66 110 76 C110 86 97 86 97 76Z" fill="none" stroke="#2C241D" stroke-width="5"/>
+            <path d="M83 76 H97" stroke="#2C241D" stroke-width="4"/>
+            <path d="M86 88 Q90 92 94 88" fill="none" stroke="#6F6257" stroke-width="3" stroke-linecap="round"/>
+            <path d="M62 118 C76 108 104 108 118 118 V136 H62Z" fill="#F8F1E7" stroke="#D9A441" stroke-width="3"/>
+            <path d="M90 112 V136" stroke="#D9A441" stroke-width="2"/>
+          </svg>
+          <h2 class="title">Читать проще, чем залипать</h2>
+          <p class="subtitle">Короткие карточки, мягкий прогресс и привычка читать каждый день.</p>
+          <div class="hero-gap"></div>
+          <div class="stack">
+            <button class="primary" data-target="preparing">Попробовать демо</button>
+            <button class="secondary" data-target="preparing">Добавить книгу</button>
+          </div>
+        </section>
+
+        <section class="screen" id="preparing">
+          <div class="top-row">
+            <button class="icon" data-target="welcome">‹</button>
+            <div></div>
+          </div>
+          <div class="card">
+            <h2 class="title">Готовим книгу</h2>
+            <p class="subtitle">Разбиваем текст на короткие карточки и сохраняем главы.</p>
+            <div class="hero-gap"></div>
+            <div class="stack">
+              <div>
+                <div class="small"><strong>Открываем книгу</strong></div>
+                <div class="bar"><span style="width:100%"></span></div>
+              </div>
+              <div>
+                <div class="small"><strong>Находим главы</strong></div>
+                <div class="bar"><span style="width:82%"></span></div>
+              </div>
+              <div>
+                <div class="small"><strong>Готовим карточки</strong></div>
+                <div class="bar"><span style="width:58%"></span></div>
+              </div>
+            </div>
+          </div>
+          <div class="hero-gap"></div>
+          <button class="primary" data-target="ready">Показать готовую книгу</button>
+        </section>
+
+        <section class="screen" id="ready">
+          <div class="top-row">
+            <button class="icon" data-target="preparing">‹</button>
+            <div></div>
+          </div>
+          <div class="card">
+            <div class="book-hero">
+              <div class="cover"></div>
+              <div>
+                <h2 class="book-title">Мастер и Маргарита</h2>
+                <p class="book-meta">Михаил Булгаков</p>
+                <p class="small muted">Можно начать с первой короткой карточки.</p>
+              </div>
+            </div>
+          </div>
+          <div class="hero-gap"></div>
+          <button class="primary" data-target="reader">Начать читать</button>
+          <button class="ghost" data-target="library">В библиотеку</button>
+        </section>
+
+        <section class="screen" id="today">
+          <div class="top-row">
+            <h2 class="title">Сегодня</h2>
+            <div class="metrics">
+              <span class="metric">7 дней</span>
+              <span class="metric">230</span>
+              <span class="mini-mascot">◌</span>
+            </div>
+          </div>
+          <div class="card">
+            <div class="book-hero">
+              <div class="cover"></div>
+              <div>
+                <h3 class="book-title">Мастер и Маргарита</h3>
+                <p class="book-meta">Глава 3 · Явление героя<br>42% книги</p>
+                <div class="bar"><span style="width:42%"></span></div>
+              </div>
+            </div>
+            <p class="subtitle">Осталось 3 минуты до серии</p>
+            <button class="primary" data-target="reader">Продолжить чтение</button>
+          </div>
+          <div class="hero-gap"></div>
+          <div class="card soft">
+            <div class="goal-grid">
+              <div>
+                <p class="section-title">Сегодняшний шаг</p>
+                <p class="small muted">Ещё немного, и серия сохранена.</p>
+              </div>
+              <div class="goal-time">2:35 / 5:00</div>
+            </div>
+            <div class="bar"><span style="width:52%"></span></div>
+          </div>
+          <div class="hero-gap"></div>
+          <div class="chips">
+            <button class="chip" data-target="reader">1 карточка</button>
+            <button class="chip" data-target="reader">3 минуты</button>
+            <button class="chip" data-target="reader">До конца блока</button>
+          </div>
+          <div class="hero-gap"></div>
+          <div class="card soft">
+            <p class="section-title">Ближайшая награда</p>
+            <div class="goal-grid">
+              <div>
+                <strong>Первая глава</strong>
+                <p class="small muted">Ещё 1 блок</p>
+              </div>
+              <strong>2 / 3</strong>
+            </div>
+            <div class="bar"><span style="width:66%"></span></div>
+          </div>
+          <div class="hero-gap"></div>
+          <div class="wins">
+            <div class="win">7 дней подряд</div>
+            <div class="win">4 карточки</div>
+            <div class="win">+40 XP</div>
+          </div>
+        </section>
+
+        <section class="screen reader" id="reader">
+          <div class="reader-top">
+            <button class="icon" data-target="today">‹</button>
+            <div class="reader-chapter">Глава 3 · 4 из 18</div>
+            <button class="icon">☆</button>
+            <button class="icon" data-target="settings">Aa</button>
+          </div>
+          <div class="reading-card">
+            <div class="card-count">Карточка 4 из 18</div>
+            <p class="reader-text">Вечерний город постепенно стихал. На пустой скамейке лежала раскрытая книга, и казалось, что она терпеливо ждёт человека, который вспомнит, зачем начал этот путь.</p>
+          </div>
+          <div class="reader-bottom">
+            <div class="bar"><span style="width:32%"></span></div>
+            <div class="reader-actions">
+              <button class="secondary" data-target="summary">Завершить</button>
+              <button class="primary" data-target="reader">Дальше</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="screen reader" id="settings">
+          <div class="reader-top">
+            <button class="icon" data-target="reader">‹</button>
+            <div class="reader-chapter">Настройки чтения</div>
+            <div></div>
+            <div></div>
+          </div>
+          <div class="reading-card">
+            <p class="reader-text">Настройки остаются рядом с чтением, но не превращаются в отдельный тяжёлый экран.</p>
+          </div>
+          <div class="sheet">
+            <p class="section-title">Размер текста</p>
+            <div class="segmented">
+              <button class="segment">A-</button>
+              <button class="segment active">Обычно</button>
+              <button class="segment">A+</button>
+            </div>
+            <p class="section-title" style="margin-top:16px">Тема</p>
+            <div class="segmented">
+              <button class="segment">Светлая</button>
+              <button class="segment active">Сепия</button>
+              <button class="segment">Тёмная</button>
+            </div>
+            <p class="section-title" style="margin-top:16px">Интервал</p>
+            <div class="segmented">
+              <button class="segment">Компактно</button>
+              <button class="segment active">Обычно</button>
+              <button class="segment">Просторно</button>
+            </div>
+            <div class="hero-gap"></div>
+            <button class="primary" data-target="reader">Готово</button>
+          </div>
+        </section>
+
+        <section class="screen" id="summary">
+          <div class="top-row">
+            <div></div>
+            <div></div>
+          </div>
+          <div class="card">
+            <h2 class="title">Хороший шаг</h2>
+            <p class="subtitle">Ты прочитал 7 минут и прошёл 4 карточки.</p>
+            <div class="hero-gap"></div>
+            <div class="card sepia">
+              <strong>Серия сохранена</strong>
+              <p class="small muted">7 дней подряд</p>
+            </div>
+            <div class="hero-gap"></div>
+            <div class="reward-row">
+              <div class="reward">+40 XP</div>
+              <div class="reward">+8 монет</div>
+            </div>
+            <div class="hero-gap"></div>
+            <p class="section-title">Первая глава</p>
+            <div class="goal-grid">
+              <p class="small muted">Ещё 1 блок, и откроется новая награда.</p>
+              <strong>2 / 3</strong>
+            </div>
+            <div class="bar"><span style="width:66%"></span></div>
+          </div>
+          <div class="hero-gap"></div>
+          <button class="primary" data-target="reader">Продолжить читать</button>
+          <button class="secondary" data-target="path">Открыть путь</button>
+          <button class="ghost" data-target="reminder">На сегодня хватит</button>
+        </section>
+
+        <section class="screen" id="reminder">
+          <div class="top-row">
+            <button class="icon" data-target="summary">‹</button>
+            <div></div>
+          </div>
+          <div class="card">
+            <h2 class="title">Напомнить завтра?</h2>
+            <p class="subtitle">Один спокойный сигнал, если ты ещё не читал. Без спама.</p>
+            <div class="hero-gap"></div>
+            <div class="chips">
+              <button class="chip">Вечером</button>
+              <button class="chip">Утром</button>
+              <button class="chip">Выбрать время</button>
+              <button class="chip">Не сейчас</button>
+            </div>
+          </div>
+          <div class="hero-gap"></div>
+          <button class="primary" data-target="today">Напомнить завтра</button>
+          <button class="ghost" data-target="today">Не сейчас</button>
+        </section>
+
+        <section class="screen" id="path">
+          <div class="top-row">
+            <h2 class="title">Путь</h2>
+            <span class="metric">12 из 28</span>
+          </div>
+          <div class="card soft">
+            <p class="section-title">Твой путь читателя</p>
+            <div class="goal-grid">
+              <p class="small muted">Следующее: Первая глава</p>
+              <strong>12 / 28</strong>
+            </div>
+            <div class="bar"><span style="width:43%"></span></div>
+          </div>
+          <div class="hero-gap"></div>
+          <div class="chips">
+            <button class="chip">Ритм</button>
+            <button class="chip">Чтение</button>
+            <button class="chip">Понимание</button>
+          </div>
+          <div class="path-map">
+            <div class="path-line"></div>
+            <div class="node-row"><button class="node completed" data-target="achievement"><strong>Первый шаг</strong>Прочитай 5 минут</button></div>
+            <div class="node-row"><button class="node completed" data-target="achievement"><strong>Искра</strong>2 дня подряд</button></div>
+            <div class="node-row"><button class="node completed" data-target="achievement"><strong>Ритм недели</strong>7 дней подряд</button></div>
+            <div class="node-row"><button class="node current" data-target="achievement"><strong>Первая глава</strong>2 / 3 блока</button></div>
+            <div class="node-row"><button class="node locked" data-target="achievement"><strong>Своя мысль</strong>Сделай заметку</button></div>
+            <div class="node-row"><button class="node locked" data-target="achievement"><strong>Глубокое чтение</strong>Читай 30 минут</button></div>
+          </div>
+          <div class="hint-card">
+            <span class="mini-mascot">◌</span>
+            <span>Ты близко к новой награде. Ещё один блок, и глава будет открыта.</span>
+          </div>
+        </section>
+
+        <section class="screen" id="achievement">
+          <div class="top-row">
+            <button class="icon" data-target="path">‹</button>
+            <div></div>
+          </div>
+          <div class="card">
+            <div class="cover" style="width:92px;height:92px;border-radius:28px;margin:auto"></div>
+            <div class="hero-gap"></div>
+            <h2 class="title">Первая глава</h2>
+            <p class="subtitle">Заверши первую главу, чтобы открыть награду.</p>
+            <div class="hero-gap"></div>
+            <div class="goal-grid">
+              <span class="small muted">Прогресс</span>
+              <strong>2 / 3</strong>
+            </div>
+            <div class="bar"><span style="width:66%"></span></div>
+            <div class="hero-gap"></div>
+            <div class="reward-row">
+              <div class="reward">+60 XP</div>
+              <div class="reward">+12 монет</div>
+            </div>
+          </div>
+          <div class="hero-gap"></div>
+          <button class="primary" data-target="reader">Продолжить чтение</button>
+          <button class="ghost" data-target="path">Закрыть</button>
+        </section>
+
+        <section class="screen" id="library">
+          <div class="top-row">
+            <h2 class="title">Библиотека</h2>
+            <button class="icon" data-target="preparing">＋</button>
+          </div>
+          <p class="section-title">Сейчас читаю</p>
+          <div class="book-list">
+            <div class="book-row">
+              <div class="small-cover"></div>
+              <div>
+                <strong>Мастер и Маргарита</strong>
+                <p class="small muted">42% книги</p>
+                <div class="bar"><span style="width:42%"></span></div>
+              </div>
+              <button class="icon" data-target="reader">›</button>
+            </div>
+            <div class="book-row">
+              <div class="small-cover"></div>
+              <div>
+                <strong>1984</strong>
+                <p class="small muted">12% книги</p>
+                <div class="bar"><span style="width:12%"></span></div>
+              </div>
+              <button class="icon" data-target="reader">›</button>
+            </div>
+          </div>
+          <div class="hero-gap"></div>
+          <p class="section-title">Готово к старту</p>
+          <div class="book-row">
+            <div class="small-cover"></div>
+            <div>
+              <strong>Sapiens</strong>
+              <p class="small muted">0% книги</p>
+              <div class="bar"><span style="width:0%"></span></div>
+            </div>
+            <button class="icon" data-target="reader">›</button>
+          </div>
+          <div class="hero-gap"></div>
+          <button class="primary" data-target="preparing">Добавить книгу</button>
+          <button class="ghost" data-target="preparing">Попробовать демо</button>
+        </section>
+
+        <nav class="nav" aria-label="Bottom navigation">
+          <button data-target="today" data-tab="today">Сегодня</button>
+          <button data-target="path" data-tab="path">Путь</button>
+          <button data-target="library" data-tab="library">Библиотека</button>
+        </nav>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const screenIds = ["welcome", "preparing", "ready", "today", "reader", "settings", "summary", "reminder", "path", "achievement", "library"];
+
+    function setScreen(id) {
+      if (!screenIds.includes(id)) return;
+      document.querySelectorAll(".screen").forEach((screen) => {
+        screen.classList.toggle("active", screen.id === id);
+      });
+      document.querySelectorAll(".flow-button").forEach((button) => {
+        button.classList.toggle("active", button.dataset.target === id);
+      });
+      document.querySelectorAll(".nav button").forEach((button) => {
+        button.classList.toggle("active", button.dataset.target === id);
+      });
+    }
+
+    document.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-target]");
+      if (!button) return;
+      setScreen(button.dataset.target);
+    });
+  </script>
+</body>
+</html>
